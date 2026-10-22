@@ -1,0 +1,6 @@
+{
+  // Tells VS Code's Java support where the RARS classes are, so java/RarsBridge.java shows no false errors.
+  "java.project.sourcePaths": ["java"],
+  "java.project.referencedLibraries": ["lib/rars1_6.jar"],
+  "java.configuration.updateBuildConfiguration": "automatic"
+}

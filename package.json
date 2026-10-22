@@ -1,0 +1,365 @@
+{
+  "name": "sparky-riscv",
+  "displayName": "Sparky RISC-V for VS",
+  "description": "Edit, run and debug RISC-V assembly in VS Code using the unmodified RARS 1.6 simulator, with RARS-style register, text segment and data segment views.",
+  "version": "0.1.0",
+  "publisher": "sparky",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Debuggers"
+  ],
+  "keywords": [
+    "risc-v",
+    "riscv",
+    "rars",
+    "assembly",
+    "simulator"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "languages": [
+      {
+        "id": "sparky-riscv",
+        "aliases": [
+          "RISC-V (Sparky)",
+          "sparky-riscv"
+        ],
+        "extensions": [
+          ".asm",
+          ".s"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "sparky-riscv",
+        "scopeName": "source.sparky-riscv",
+        "path": "./syntaxes/riscv.tmLanguage.json"
+      }
+    ],
+    "configurationDefaults": {
+      "[sparky-riscv]": {
+        "editor.inlineSuggest.enabled": false,
+        "editor.wordBasedSuggestions": "off",
+        "editor.suggest.showSnippets": false,
+        "editor.suggest.showWords": false
+      }
+    },
+    "breakpoints": [
+      {
+        "language": "sparky-riscv"
+      }
+    ],
+    "viewsContainers": {
+      "secondarySidebar": [
+        {
+          "id": "sparky-registers",
+          "title": "Registers",
+          "icon": "media/sparky.svg"
+        }
+      ],
+      "panel": [
+        {
+          "id": "sparky-text",
+          "title": "Text Segment",
+          "icon": "media/sparky.svg"
+        },
+        {
+          "id": "sparky-data",
+          "title": "Data Segment",
+          "icon": "media/sparky.svg"
+        },
+        {
+          "id": "sparky-labels",
+          "title": "Labels",
+          "icon": "media/sparky.svg"
+        }
+      ]
+    },
+    "views": {
+      "sparky-registers": [
+        {
+          "type": "webview",
+          "id": "sparky.registers",
+          "name": "Registers",
+          "icon": "media/sparky.svg"
+        }
+      ],
+      "sparky-text": [
+        {
+          "type": "webview",
+          "id": "sparky.textSegment",
+          "name": "Text Segment",
+          "icon": "media/sparky.svg"
+        }
+      ],
+      "sparky-data": [
+        {
+          "type": "webview",
+          "id": "sparky.dataSegment",
+          "name": "Data Segment",
+          "icon": "media/sparky.svg"
+        }
+      ],
+      "sparky-labels": [
+        {
+          "type": "webview",
+          "id": "sparky.labels",
+          "name": "Labels",
+          "icon": "media/sparky.svg"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "sparky.run",
+        "title": "Sparky: Run Current File",
+        "icon": "$(play)"
+      },
+      {
+        "command": "sparky.debug",
+        "title": "Sparky: Debug Current File",
+        "icon": "$(debug-alt)"
+      },
+      {
+        "command": "sparky.restartLint",
+        "title": "Sparky: Restart RARS Checker"
+      },
+      {
+        "command": "sparky.showIO",
+        "title": "Sparky: Show Program I/O"
+      }
+    ],
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "sparky.run",
+          "when": "resourceLangId == sparky-riscv",
+          "group": "navigation@1"
+        },
+        {
+          "command": "sparky.debug",
+          "when": "resourceLangId == sparky-riscv",
+          "group": "navigation@2"
+        }
+      ]
+    },
+    "debuggers": [
+      {
+        "type": "sparky",
+        "label": "Sparky RISC-V (RARS)",
+        "languages": [
+          "sparky-riscv"
+        ],
+        "configurationAttributes": {
+          "launch": {
+            "required": [
+              "program"
+            ],
+            "properties": {
+              "program": {
+                "type": "string",
+                "description": "Main assembly file.",
+                "default": "${file}"
+              },
+              "extraFiles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Additional files assembled together with the program (like passing several files to RARS).",
+                "default": []
+              },
+              "project": {
+                "type": "boolean",
+                "description": "Assemble every .asm/.s file in the program's folder (RARS project mode).",
+                "default": false
+              },
+              "stopOnEntry": {
+                "type": "boolean",
+                "description": "Stop on the first instruction.",
+                "default": true
+              },
+              "startAtMain": {
+                "type": "boolean",
+                "description": "Start execution at the global label 'main' when it exists."
+              },
+              "rv64": {
+                "type": "boolean",
+                "description": "Assemble and run as 64-bit RISC-V (RV64)."
+              },
+              "pseudoInstructions": {
+                "type": "boolean",
+                "description": "Allow pseudo-instructions."
+              },
+              "selfModifyingCode": {
+                "type": "boolean",
+                "description": "Allow the program to write to and run from the text segment."
+              },
+              "warningsAreErrors": {
+                "type": "boolean",
+                "description": "Treat assembler warnings as errors."
+              },
+              "memoryConfiguration": {
+                "type": "string",
+                "enum": [
+                  "Default",
+                  "CompactDataAtZero",
+                  "CompactTextAtZero"
+                ],
+                "description": "RARS memory configuration."
+              },
+              "reverseDebugging": {
+                "type": "boolean",
+                "description": "Record state so that Step Back works (RARS keeps only the most recent instructions)."
+              },
+              "programArguments": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Program arguments, placed in memory like RARS does (a0 = argc, a1 = argv).",
+                "default": []
+              }
+            }
+          }
+        },
+        "initialConfigurations": [
+          {
+            "type": "sparky",
+            "request": "launch",
+            "name": "Sparky: Debug current file",
+            "program": "${file}",
+            "stopOnEntry": true
+          }
+        ],
+        "configurationSnippets": [
+          {
+            "label": "Sparky RISC-V: Debug file",
+            "description": "Debug a RISC-V assembly file with RARS",
+            "body": {
+              "type": "sparky",
+              "request": "launch",
+              "name": "Sparky: Debug ${1:file}",
+              "program": "^\"\\${file}\"",
+              "stopOnEntry": true
+            }
+          }
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "Sparky RISC-V for VS",
+      "properties": {
+        "sparky.javaPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the java executable. Empty = use JAVA_HOME or 'java' from PATH."
+        },
+        "sparky.jarPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to a RARS jar to use instead of the bundled rars1_6.jar."
+        },
+        "sparky.lint.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Check the program with the real RARS assembler while you type and show errors in the editor."
+        },
+        "sparky.lint.delay": {
+          "type": "number",
+          "default": 500,
+          "minimum": 100,
+          "description": "Milliseconds to wait after the last keystroke before checking the program."
+        },
+        "sparky.rv64": {
+          "type": "boolean",
+          "default": false,
+          "description": "Use 64-bit RISC-V (RV64) for checking, running and debugging."
+        },
+        "sparky.pseudoInstructions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Allow pseudo-instructions (li, la, mv, ...)."
+        },
+        "sparky.startAtMain": {
+          "type": "boolean",
+          "default": false,
+          "description": "Start execution at the global label 'main' when it is defined."
+        },
+        "sparky.selfModifyingCode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Allow self-modifying code."
+        },
+        "sparky.warningsAreErrors": {
+          "type": "boolean",
+          "default": false,
+          "description": "Treat assembler warnings as errors."
+        },
+        "sparky.memoryConfiguration": {
+          "type": "string",
+          "enum": [
+            "Default",
+            "CompactDataAtZero",
+            "CompactTextAtZero"
+          ],
+          "default": "Default",
+          "description": "RARS memory configuration."
+        },
+        "sparky.reverseDebugging": {
+          "type": "boolean",
+          "default": true,
+          "description": "Record execution so Step Back works. RARS keeps only the most recent instructions."
+        },
+        "sparky.showViewsOnDebug": {
+          "type": "boolean",
+          "default": true,
+          "description": "Open the Registers and Text Segment panels when a debug session starts."
+        },
+        "sparky.numberFormat": {
+          "type": "string",
+          "enum": [
+            "hex",
+            "decimal",
+            "both"
+          ],
+          "default": "both",
+          "description": "How register values are shown in the Variables view."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build:bridge": "node scripts/build-bridge.mjs",
+    "build:grammar": "node scripts/gen-grammar.mjs",
+    "build:ext": "node esbuild.mjs",
+    "build": "npm run build:bridge && npm run build:ext",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc --noEmit -p .",
+    "test:bridge": "node test/bridge-smoke.mjs",
+    "package": "npm run build && vsce package --no-dependencies",
+    "test:dap": "node test/dap-smoke.mjs",
+    "test:views": "node test/views-smoke.mjs",
+    "test:operands": "node test/operands-smoke.mjs",
+    "test:integration": "node test/integration/runTest.mjs",
+    "test": "npm run test:bridge && npm run test:operands && npm run test:dap && npm run test:views"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/vscode": "1.90.0",
+    "@vscode/debugadapter": "^1.68.0",
+    "@vscode/debugprotocol": "^1.68.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.25.0",
+    "jsdom": "^30.1.3",
+    "typescript": "^5.6.0"
+  }
+}

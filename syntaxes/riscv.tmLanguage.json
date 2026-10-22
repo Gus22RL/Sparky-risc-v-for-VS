@@ -1,0 +1,165 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "RISC-V (Sparky)",
+  "scopeName": "source.sparky-riscv",
+  "patterns": [
+    {
+      "include": "#comment"
+    },
+    {
+      "include": "#instructionLine"
+    },
+    {
+      "include": "#labelDefinition"
+    },
+    {
+      "include": "#directive"
+    },
+    {
+      "include": "#string"
+    },
+    {
+      "include": "#char"
+    },
+    {
+      "include": "#number"
+    },
+    {
+      "include": "#relocation"
+    },
+    {
+      "include": "#csr"
+    },
+    {
+      "include": "#register"
+    },
+    {
+      "include": "#labelReference"
+    },
+    {
+      "include": "#punctuation"
+    }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.line.number-sign.sparky-riscv",
+      "match": "#.*$"
+    },
+    "instructionLine": {
+      "patterns": [
+        {
+          "match": "^\\s*(?:([A-Za-z_.$][A-Za-z0-9_.$]*)(:)\\s*)?(fence\\.i|ebreak|fence|ecall|bgeu|bltu|jalr|uret|beqz|bnez|bgez|bltz|bgtz|blez|bgtu|bleu|call|tail|bge|beq|jal|bne|blt|wfi|bgt|ble|ret|jr|b|j)(?![A-Za-z0-9_.$])",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.label.sparky-riscv"
+            },
+            "2": {
+              "name": "punctuation.separator.label.sparky-riscv"
+            },
+            "3": {
+              "name": "keyword.control.instruction.sparky-riscv"
+            }
+          }
+        },
+        {
+          "match": "^\\s*(?:([A-Za-z_.$][A-Za-z0-9_.$]*)(:)\\s*)?(rdinstreth|rdinstret|rdcycleh|frflags|fsflags|rdcycle|rdtimeh|fmv\\.x\\.w|fmv\\.w\\.x|fabs\\.s|fneg\\.s|fabs\\.d|fneg\\.d|rdtime|sext\\.b|sext\\.h|zext\\.b|zext\\.h|sext\\.w|zext\\.w|fmv\\.s|fmv\\.d|csrwi|csrsi|csrci|frcsr|fscsr|fgt\\.s|fge\\.s|fgt\\.d|fge\\.d|sgtu|seqz|snez|sgtz|sltz|csrr|csrw|csrs|csrc|frsr|fssr|frrm|fsrm|negw|nop|not|neg|sgt|mv|li|la)(?![A-Za-z0-9_.$])",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.label.sparky-riscv"
+            },
+            "2": {
+              "name": "punctuation.separator.label.sparky-riscv"
+            },
+            "3": {
+              "name": "support.function.pseudo-instruction.sparky-riscv"
+            }
+          }
+        },
+        {
+          "match": "^\\s*(?:([A-Za-z_.$][A-Za-z0-9_.$]*)(:)\\s*)?(fcvt\\.wu\\.s|fcvt\\.s\\.wu|fcvt\\.wu\\.d|fcvt\\.d\\.wu|fcvt\\.lu\\.s|fcvt\\.lu\\.d|fcvt\\.d\\.lu|fcvt\\.s\\.lu|fnmsub\\.s|fsgnjn\\.s|fcvt\\.d\\.s|fcvt\\.d\\.w|fcvt\\.w\\.s|fcvt\\.s\\.d|fnmadd\\.d|fcvt\\.w\\.d|fsgnjx\\.s|fsgnjx\\.d|fsgnjn\\.d|fnmsub\\.d|fclass\\.s|fclass\\.d|fnmadd\\.s|fcvt\\.s\\.w|fcvt\\.l\\.s|fcvt\\.l\\.d|fcvt\\.d\\.l|fcvt\\.s\\.l|fsqrt\\.d|fsgnj\\.s|fmadd\\.d|fmsub\\.s|fmsub\\.d|fmadd\\.s|fsgnj\\.d|fmv\\.s\\.x|fmv\\.x\\.s|fsqrt\\.s|fmv\\.d\\.x|fmv\\.x\\.d|mulhsu|csrrwi|fmax\\.d|fdiv\\.s|fmin\\.s|fmul\\.d|fadd\\.s|fdiv\\.d|fmul\\.s|fsub\\.s|csrrsi|fmax\\.s|csrrci|fmin\\.d|fsub\\.d|fadd\\.d|csrrc|feq\\.s|flt\\.d|auipc|fle\\.d|mulhu|csrrw|fle\\.s|feq\\.d|csrrs|sltiu|flt\\.s|sraiw|remuw|addiw|srliw|slliw|divuw|remu|andi|mulh|divu|sltu|slli|addi|slti|srai|xori|srli|sllw|divw|subw|addw|sraw|srlw|remw|mulw|rem|sub|lui|div|fld|sra|fsw|slt|add|fsd|lhu|sll|and|srl|xor|lbu|ori|flw|mul|lwu|sh|sw|or|lb|lh|sb|lw|ld|sd)(?![A-Za-z0-9_.$])",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.label.sparky-riscv"
+            },
+            "2": {
+              "name": "punctuation.separator.label.sparky-riscv"
+            },
+            "3": {
+              "name": "support.function.instruction.sparky-riscv"
+            }
+          }
+        }
+      ]
+    },
+    "labelDefinition": {
+      "match": "^\\s*([A-Za-z_.$][A-Za-z0-9_.$]*)(:)",
+      "captures": {
+        "1": {
+          "name": "entity.name.function.label.sparky-riscv"
+        },
+        "2": {
+          "name": "punctuation.separator.label.sparky-riscv"
+        }
+      }
+    },
+    "directive": {
+      "name": "keyword.other.directive.sparky-riscv",
+      "match": "\\.(?:text|data|word|half|byte|dword|ascii|asciz|string|space|float|double|align|balign|globl|global|eqv|macro|end_macro|include|set|extern|section|option|ktext|kdata|zero|skip|p2align)(?![A-Za-z0-9_.$])"
+    },
+    "string": {
+      "name": "string.quoted.double.sparky-riscv",
+      "begin": "\"",
+      "end": "\"|$",
+      "patterns": [
+        {
+          "name": "constant.character.escape.sparky-riscv",
+          "match": "\\\\(?:[nrtb0fv\\\\'\"]|x[0-9a-fA-F]{1,2}|[0-7]{1,3})"
+        }
+      ]
+    },
+    "char": {
+      "name": "string.quoted.single.sparky-riscv",
+      "match": "'(?:\\\\(?:[nrtb0fv\\\\'\"]|x[0-9a-fA-F]{1,2}|[0-7]{1,3})|[^'\\\\])'"
+    },
+    "number": {
+      "patterns": [
+        {
+          "name": "constant.numeric.hex.sparky-riscv",
+          "match": "(?<![A-Za-z0-9_.$])[-+]?0[xX][0-9a-fA-F_]+\\b"
+        },
+        {
+          "name": "constant.numeric.binary.sparky-riscv",
+          "match": "(?<![A-Za-z0-9_.$])[-+]?0[bB][01_]+\\b"
+        },
+        {
+          "name": "constant.numeric.float.sparky-riscv",
+          "match": "(?<![A-Za-z0-9_.$])[-+]?\\d+\\.\\d+(?:[eE][-+]?\\d+)?\\b"
+        },
+        {
+          "name": "constant.numeric.decimal.sparky-riscv",
+          "match": "(?<![A-Za-z0-9_.$])[-+]?\\d+\\b"
+        }
+      ]
+    },
+    "relocation": {
+      "name": "support.function.relocation.sparky-riscv",
+      "match": "%(?:hi|lo|pcrel_hi|pcrel_lo|tprel_hi|tprel_lo|got_pcrel_hi|tls_ie_pcrel_hi|tls_gd_pcrel_hi)(?=\\()"
+    },
+    "csr": {
+      "name": "variable.language.csr.sparky-riscv",
+      "match": "(?<![A-Za-z0-9_.$])(?:fflags|frm|fcsr|ustatus|uie|utvec|uscratch|uepc|ucause|utval|uip|cycle|time|instret|cycleh|timeh|instreth)(?![A-Za-z0-9_.$])"
+    },
+    "register": {
+      "name": "variable.language.register.sparky-riscv",
+      "match": "(?<![A-Za-z0-9_.$])(?:zero|ra|sp|gp|tp|fp|t[0-6]|s(?:1[01]|[0-9])|a[0-7]|x(?:[12][0-9]|3[01]|[0-9])|f(?:[12][0-9]|3[01]|[0-9])|ft(?:1[01]|[0-9])|fs(?:1[01]|[0-9])|fa[0-7])(?![A-Za-z0-9_.$:])"
+    },
+    "labelReference": {
+      "name": "variable.other.label.sparky-riscv",
+      "match": "(?<![A-Za-z0-9_.$])[A-Za-z_.$][A-Za-z0-9_.$]*(?![A-Za-z0-9_.$:])"
+    },
+    "punctuation": {
+      "name": "punctuation.separator.sparky-riscv",
+      "match": "[,()]"
+    }
+  }
+}

@@ -1,0 +1,251 @@
+/* Shared styling for the RARS-style panels. Everything is expressed with VS Code theme variables, so the
+   views follow light, dark and high-contrast themes automatically. */
+:root {
+  --sp-font: var(--vscode-editor-font-family, Consolas, monospace);
+  --sp-size: var(--vscode-editor-font-size, 13px);
+  --sp-border: var(--vscode-panel-border, rgba(128, 128, 128, 0.35));
+  --sp-stripe: color-mix(in srgb, var(--vscode-foreground) 5%, transparent);
+  --sp-hover: var(--vscode-list-hoverBackground, rgba(128, 128, 128, 0.15));
+  --sp-current: var(--vscode-editor-stackFrameHighlightBackground, rgba(255, 255, 0, 0.2));
+  --sp-changed: var(--vscode-diffEditor-insertedTextBackground, rgba(155, 185, 85, 0.3));
+  --sp-changed-edge: var(--vscode-gitDecoration-modifiedResourceForeground, #e2c08d);
+  --sp-bkpt: var(--vscode-debugIcon-breakpointForeground, #e51400);
+  --sp-muted: var(--vscode-descriptionForeground, rgba(128, 128, 128, 0.9));
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  color: var(--vscode-foreground);
+  --sp-bg: var(--vscode-editor-background);
+}
+body.sidebar {
+  --sp-bg: var(--vscode-sideBar-background, var(--vscode-editor-background));
+}
+body.panel {
+  --sp-bg: var(--vscode-panel-background, var(--vscode-editor-background));
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--sp-border);
+  background: var(--sp-bg);
+  flex: 0 0 auto;
+}
+
+.scroll {
+  flex: 1 1 auto;
+  overflow: auto;
+  background: var(--sp-bg);
+}
+
+.empty {
+  padding: 16px 12px;
+  color: var(--sp-muted);
+  line-height: 1.5;
+}
+
+.status {
+  margin-left: auto;
+  color: var(--sp-muted);
+  font-size: 0.9em;
+}
+.status.running {
+  color: var(--vscode-charts-orange, orange);
+}
+
+.tabs {
+  display: flex;
+  gap: 2px;
+}
+.tab {
+  background: transparent;
+  color: var(--vscode-foreground);
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 3px 8px;
+  cursor: pointer;
+  font: inherit;
+  opacity: 0.75;
+}
+.tab:hover {
+  opacity: 1;
+  background: var(--sp-hover);
+}
+.tab.active {
+  opacity: 1;
+  border-bottom-color: var(--vscode-focusBorder, #007fd4);
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn {
+  background: var(--vscode-button-secondaryBackground, rgba(128, 128, 128, 0.25));
+  color: var(--vscode-button-secondaryForeground, var(--vscode-foreground));
+  border: 1px solid transparent;
+  border-radius: 2px;
+  padding: 1px 8px;
+  cursor: pointer;
+  font: inherit;
+}
+.btn:hover {
+  background: var(--vscode-button-secondaryHoverBackground, rgba(128, 128, 128, 0.4));
+}
+
+select,
+input[type='text'],
+input.goto,
+td input {
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border: 1px solid var(--vscode-input-border, var(--sp-border));
+  font: inherit;
+  padding: 1px 4px;
+}
+select {
+  background: var(--vscode-dropdown-background, var(--vscode-input-background));
+  color: var(--vscode-dropdown-foreground, var(--vscode-input-foreground));
+  border-color: var(--vscode-dropdown-border, var(--sp-border));
+}
+input.goto {
+  width: 11em;
+}
+input:focus,
+select:focus,
+button:focus-visible {
+  outline: 1px solid var(--vscode-focusBorder, #007fd4);
+  outline-offset: -1px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: var(--sp-font);
+  font-size: var(--sp-size);
+}
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  text-align: left;
+  font-family: var(--vscode-font-family);
+  font-weight: 600;
+  padding: 3px 10px;
+  background: var(--sp-bg);
+  border-bottom: 1px solid var(--sp-border);
+  white-space: nowrap;
+}
+td {
+  padding: 1px 10px;
+  white-space: nowrap;
+}
+tbody tr:nth-child(even) {
+  background: var(--sp-stripe);
+}
+tbody tr:hover {
+  background: var(--sp-hover);
+}
+tbody tr.current,
+tbody tr.current:hover {
+  background: var(--sp-current);
+}
+td.changed {
+  background: var(--sp-changed);
+  box-shadow: inset 0 0 0 1px var(--sp-changed-edge);
+}
+td.value,
+th.value,
+td.num,
+th.num {
+  text-align: right;
+}
+td.value {
+  cursor: text;
+}
+td.muted {
+  color: var(--sp-muted);
+}
+td input {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: right;
+  font-family: var(--sp-font);
+}
+
+.bkpt {
+  width: 1px;
+  text-align: center;
+}
+.bkpt-box {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 11px;
+  height: 11px;
+  margin: 0;
+  border-radius: 50%;
+  border: 1px solid var(--sp-muted);
+  cursor: pointer;
+  vertical-align: middle;
+  opacity: 0.55;
+}
+.bkpt-box:hover {
+  opacity: 1;
+  border-color: var(--sp-bkpt);
+}
+.bkpt-box:checked {
+  background: var(--sp-bkpt);
+  border-color: var(--sp-bkpt);
+  opacity: 1;
+}
+.bkpt-none {
+  display: inline-block;
+  width: 11px;
+}
+
+tr.pc-marker td:first-child {
+  box-shadow: inset 3px 0 0 var(--vscode-debugIcon-breakpointCurrentStackframeForeground, #ffcc00);
+}
+
+.layout.running .scroll {
+  opacity: 0.5;
+}
+
+.addr {
+  color: var(--vscode-textLink-foreground, inherit);
+}
+tr.reveal {
+  outline: 1px solid var(--vscode-focusBorder, #007fd4);
+  outline-offset: -1px;
+}
+.ascii {
+  letter-spacing: 0.15em;
+}
+.link {
+  cursor: pointer;
+}
+.link:hover {
+  text-decoration: underline;
+}
