@@ -47,6 +47,24 @@ factorial:   #fn
 
 - El inicio también puede ir solo, en la línea de arriba de la etiqueta (`#fn factorial`).
 - Al plegar queda visible la línea de la etiqueta; el resto, hasta `#endfn`, se contrae. Plegar todo: **Ctrl+K Ctrl+0**; desplegar todo: **Ctrl+K Ctrl+J**.
+- Dentro de una función puedes plegar grupos más pequeños (por ejemplo los `push` y los `pop`). Escribe un nombre (id) después de `#fn` y de `#endfn`; el nombre queda visible al plegar:
+
+  ```
+  hanoi:   #fn
+      #fn push
+      addi sp, sp, -4
+      sw   ra, 0(sp)
+      #endfn push
+      jal  hanoi
+      #fn pop
+      lw   ra, 0(sp)
+      addi sp, sp, 4
+      #endfn pop
+      jalr ra
+  #endfn
+  ```
+
+  Cada grupo se pliega por separado, y al plegar la función completa se esconden también. Puedes repetir el mismo id en varios grupos; los marcadores se emparejan por anidación (el `#endfn` cierra el `#fn` abierto más reciente), y el id es solo una etiqueta para ti: no se valida que coincidan.
 - Los bloques `.macro` … `.end_macro` se pliegan igual.
 - `#fn` y `#endfn` son comentarios para RARS, así que no cambian el programa. Se resaltan con otro color que un comentario normal.
 

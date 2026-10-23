@@ -32,11 +32,15 @@ main:   #fn
 #endfn
 
 # Case 3: #fn on its own line above the label (two nested folds: the whole block and the label body).
+# It also has named groups inside: "#fn push" ... "#endfn push" and "#fn pop" ... "#endfn pop".
+# Each group folds on its own, and folding the whole function hides them too.
 #fn factorial
 factorial:
+    #fn push
     addi sp, sp, -8
     sw   ra, 4(sp)
     sw   a0, 0(sp)
+    #endfn push
     li   t0, 2
     blt  a0, t0, fact_base
     addi a0, a0, -1
@@ -47,8 +51,10 @@ factorial:
 fact_base:
     li   a0, 1
 fact_end:
+    #fn pop
     lw   ra, 4(sp)
     addi sp, sp, 8
+    #endfn pop
     ret
 #endfn
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Documented and tested folding of named groups inside a function (`#fn push` … `#endfn push`); the id after the marker is a free label shown when folded, and it can be reused.
+
 ## 0.2.0
 
 - Function folding: `label: #fn` … `#endfn` collapses a function in the editor gutter (`.macro` … `.end_macro` still folds). The markers are highlighted differently from regular comments.
