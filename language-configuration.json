@@ -18,8 +18,8 @@
   "wordPattern": "(-?0[xX][0-9a-fA-F]+)|(-?\\d*\\.\\d+)|([A-Za-z_.$][A-Za-z0-9_.$]*)|(-?\\d+)",
   "folding": {
     "markers": {
-      "start": "^\\s*\\.macro\\b",
-      "end": "^\\s*\\.end_macro\\b"
+      "start": "^\\s*(?:\\.macro\\b|(?:[A-Za-z_.$][A-Za-z0-9_.$]*:\\s*)?#\\s*fn\\b)",
+      "end": "^\\s*(?:\\.end_macro\\b|#\\s*endfn\\b)"
     }
   }
 }

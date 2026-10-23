@@ -57,6 +57,7 @@ const grammar = {
   name: 'RISC-V (Sparky)',
   scopeName: 'source.sparky-riscv',
   patterns: [
+    { include: '#foldMarker' },
     { include: '#comment' },
     { include: '#instructionLine' },
     { include: '#labelDefinition' },
@@ -71,6 +72,15 @@ const grammar = {
     { include: '#punctuation' },
   ],
   repository: {
+    // `#fn` after a label and `#endfn` fold a function (see folding.markers in language-configuration.json).
+    foldMarker: {
+      match: '(#)\\s*(fn|endfn)(?![A-Za-z0-9_.$])(.*)$',
+      captures: {
+        1: { name: 'comment.line.number-sign.sparky-riscv' },
+        2: { name: 'keyword.other.fold-marker.sparky-riscv' },
+        3: { name: 'comment.line.number-sign.sparky-riscv' },
+      },
+    },
     comment: { name: 'comment.line.number-sign.sparky-riscv', match: '#.*$' },
     instructionLine: {
       patterns: [

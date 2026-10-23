@@ -4,6 +4,9 @@
   "scopeName": "source.sparky-riscv",
   "patterns": [
     {
+      "include": "#foldMarker"
+    },
+    {
       "include": "#comment"
     },
     {
@@ -41,6 +44,20 @@
     }
   ],
   "repository": {
+    "foldMarker": {
+      "match": "(#)\\s*(fn|endfn)(?![A-Za-z0-9_.$])(.*)$",
+      "captures": {
+        "1": {
+          "name": "comment.line.number-sign.sparky-riscv"
+        },
+        "2": {
+          "name": "keyword.other.fold-marker.sparky-riscv"
+        },
+        "3": {
+          "name": "comment.line.number-sign.sparky-riscv"
+        }
+      }
+    },
     "comment": {
       "name": "comment.line.number-sign.sparky-riscv",
       "match": "#.*$"

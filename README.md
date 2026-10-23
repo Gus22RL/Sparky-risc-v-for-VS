@@ -11,10 +11,10 @@ El simulador (`rars1_6.jar`) ya viene dentro de la extensión: no necesitas tene
 
 ## Instalación
 
-Desde VS Code: **Extensiones → ⋯ → Instalar desde VSIX…** y elige `sparky-riscv-0.1.0.vsix`, o desde una terminal:
+Desde VS Code: **Extensiones → ⋯ → Instalar desde VSIX…** y elige `sparky-riscv-0.2.0.vsix`, o desde una terminal:
 
 ```
-code --install-extension sparky-riscv-0.1.0.vsix
+code --install-extension sparky-riscv-0.2.0.vsix
 ```
 
 El mismo `.vsix` se puede copiar a otra computadora e instalar igual.
@@ -31,6 +31,24 @@ El mismo `.vsix` se puede copiar a otra computadora e instalar igual.
 - **Errores en tiempo real** con el ensamblador de RARS: subrayado rojo (error) o amarillo (advertencia) con el mismo mensaje que daría RARS. Se revisan ~0.5 s después de dejar de escribir.
 - **Ayuda de sintaxis, nunca soluciones.** Hover, autocompletado y ayuda de operandos solo explican **cómo se escribe** cada instrucción y **de qué se compone**: por ejemplo `addi rd, rs1, imm`, con qué es cada parte (`rd` = registro destino, `rs1` = registro fuente, `imm` = constante), el ejemplo y la descripción que da RARS (`addi t1,t2,-100`). Al insertar una instrucción se escriben los nombres de las partes (`rd`, `rs1`, `imm`…), no valores. En cada posición solo se sugiere lo que cabe ahí: registros, registros de punto flotante o etiquetas de tu archivo; si va una constante, no se sugiere nada. La información sale del propio jar, así que coincide con RARS 1.6 y con RV32/RV64. Al pasar el mouse sobre `ecall` se muestra el servicio de la syscall (según el valor que cargaste en `a7`).
 - **Sin código sugerido.** No hay *snippets* ni esqueletos de programa, y para este lenguaje la extensión desactiva las sugerencias en línea de VS Code (el texto gris que propone líneas completas, como las de Copilot) y las sugerencias por palabras del archivo. Si quieres volver a activarlas: `"[sparky-riscv]": { "editor.inlineSuggest.enabled": true }` en tus ajustes.
+
+### Plegar funciones
+
+Para poder contraer una función en el margen del editor, escribe `#fn` en la línea de su etiqueta y `#endfn` donde termina:
+
+```
+factorial:   #fn
+    addi sp, sp, -8
+    sw   ra, 0(sp)
+    ...
+    ret
+#endfn
+```
+
+- El inicio también puede ir solo, en la línea de arriba de la etiqueta (`#fn factorial`).
+- Al plegar queda visible la línea de la etiqueta; el resto, hasta `#endfn`, se contrae. Plegar todo: **Ctrl+K Ctrl+0**; desplegar todo: **Ctrl+K Ctrl+J**.
+- Los bloques `.macro` … `.end_macro` se pliegan igual.
+- `#fn` y `#endfn` son comentarios para RARS, así que no cambian el programa. Se resaltan con otro color que un comentario normal.
 
 ### Depurador
 

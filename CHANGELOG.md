@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.0
+
+- Function folding: `label: #fn` … `#endfn` collapses a function in the editor gutter (`.macro` … `.end_macro` still folds). The markers are highlighted differently from regular comments.
+
 ## 0.1.0
 
 - First version: RISC-V language support (highlighting, hover, completion, signature help) generated from the RARS 1.6 jar.

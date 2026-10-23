@@ -2,7 +2,7 @@
   "name": "sparky-riscv",
   "displayName": "Sparky RISC-V for VS",
   "description": "Edit, run and debug RISC-V assembly in VS Code using the unmodified RARS 1.6 simulator, with RARS-style register, text segment and data segment views.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "sparky",
   "license": "MIT",
   "engines": {
@@ -348,8 +348,9 @@
     "test:dap": "node test/dap-smoke.mjs",
     "test:views": "node test/views-smoke.mjs",
     "test:operands": "node test/operands-smoke.mjs",
+    "test:folding": "node test/folding-smoke.mjs",
     "test:integration": "node test/integration/runTest.mjs",
-    "test": "npm run test:bridge && npm run test:operands && npm run test:dap && npm run test:views"
+    "test": "npm run test:bridge && npm run test:operands && npm run test:dap && npm run test:views && npm run test:folding"
   },
   "devDependencies": {
     "@types/node": "^20.14.0",
